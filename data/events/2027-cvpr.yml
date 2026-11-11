@@ -1,0 +1,14 @@
+id: cvpr-2027
+title: CVPR 2027 (workshops incl. EarthVision typically Jun 20–21)
+start: 2027-06-20
+end: 2027-06-25
+location: Seattle, WA
+format: in-person
+type: conference
+org: IEEE/CVF
+url: https://cvpr.thecvf.com/Conferences/2027
+tags: [computer-vision, ieee]
+deadlines:
+  - {label: Paper submission deadline (AoE), date: 2026-11-16}
+added_by: claude
+verified_on: 2026-11-11

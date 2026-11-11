@@ -1,0 +1,101 @@
+[
+ {
+  "id": "agu26",
+  "title": "AGU26 Annual Meeting",
+  "start": "2026-12-07",
+  "end": "2026-12-11",
+  "location": "Moscone Center, San Francisco, CA",
+  "format": "in-person",
+  "type": "conference",
+  "org": "AGU",
+  "url": "https://www.agu.org/annual-meeting",
+  "tags": [
+   "earth-science",
+   "agu"
+  ],
+  "added_by": "claude",
+  "verified_on": "2026-11-11"
+ },
+ {
+  "id": "ams-2027",
+  "title": "107th AMS Annual Meeting (incl. 26th Conference on AI for Environmental Science)",
+  "start": "2027-01-10",
+  "end": "2027-01-14",
+  "location": "Denver, CO",
+  "format": "in-person",
+  "type": "conference",
+  "org": "American Meteorological Society",
+  "url": "https://ams.confex.com/ams/107ANNUAL/cfp.cgi",
+  "tags": [
+   "weather",
+   "climate",
+   "ai4es"
+  ],
+  "added_by": "claude",
+  "verified_on": "2026-11-11"
+ },
+ {
+  "id": "cvpr-2027",
+  "title": "CVPR 2027 (workshops incl. EarthVision typically Jun 20\u201321)",
+  "start": "2027-06-20",
+  "end": "2027-06-25",
+  "location": "Seattle, WA",
+  "format": "in-person",
+  "type": "conference",
+  "org": "IEEE/CVF",
+  "url": "https://cvpr.thecvf.com/Conferences/2027",
+  "tags": [
+   "computer-vision",
+   "ieee"
+  ],
+  "deadlines": [
+   {
+    "label": "Paper submission deadline (AoE)",
+    "date": "2026-11-16"
+   }
+  ],
+  "added_by": "claude",
+  "verified_on": "2026-11-11"
+ },
+ {
+  "id": "igarss-2027",
+  "title": "IGARSS 2027 \u2014 IEEE International Geoscience and Remote Sensing Symposium",
+  "start": "2027-07-11",
+  "end": "2027-07-16",
+  "location": "Harpa, Reykjav\u00edk, Iceland",
+  "format": "in-person",
+  "type": "conference",
+  "org": "IEEE GRSS",
+  "url": "https://www.grss-ieee.org/event/2027-ieee-international-geoscience-and-remote-sensing-symposium/",
+  "tags": [
+   "remote-sensing",
+   "ieee",
+   "grss"
+  ],
+  "deadlines": [
+   {
+    "label": "Abstract/manuscript deadline",
+    "date": "2027-01-11"
+   }
+  ],
+  "added_by": "claude",
+  "verified_on": "2026-11-11"
+ },
+ {
+  "id": "agu27",
+  "title": "AGU27 Annual Meeting",
+  "start": "2027-12-13",
+  "end": "2027-12-17",
+  "location": "Washington, DC",
+  "format": "in-person",
+  "type": "conference",
+  "org": "AGU",
+  "url": "https://www.agu.org/meetings",
+  "tags": [
+   "earth-science",
+   "agu"
+  ],
+  "added_by": "claude",
+  "verified_on": "2026-11-11"
+ }
+]

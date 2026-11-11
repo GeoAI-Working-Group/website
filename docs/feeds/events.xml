@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
+<title>Geo-AI Working Group — Events &amp; Lectures</title>
+<link>https://geoai-wg.github.io/website/</link>
+<atom:link href="https://geoai-wg.github.io/website/feeds/events.xml" rel="self" type="application/rss+xml"/>
+<description>Geospatial AI conferences, deadlines, and Geo-AI WG lectures.</description>
+<lastBuildDate>Wed, 11 Nov 2026 17:38:53 +0000</lastBuildDate>
+<item><title>AGU26 Annual Meeting</title><link>https://www.agu.org/annual-meeting</link><guid isPermaLink="false">event-agu26</guid><category>Event</category><pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate><description>Dec 07, 2026 – Dec 11, 2026 · Moscone Center, San Francisco, CA · AGU</description></item>
+<item><title>AGU27 Annual Meeting</title><link>https://www.agu.org/meetings</link><guid isPermaLink="false">event-agu27</guid><category>Event</category><pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate><description>Dec 13, 2027 – Dec 17, 2027 · Washington, DC · AGU</description></item>
+<item><title>107th AMS Annual Meeting (incl. 26th Conference on AI for Environmental Science)</title><link>https://ams.confex.com/ams/107ANNUAL/cfp.cgi</link><guid isPermaLink="false">event-ams-2027</guid><category>Event</category><pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate><description>Jan 10, 2027 – Jan 14, 2027 · Denver, CO · American Meteorological Society</description></item>
+<item><title>CVPR 2027 (workshops incl. EarthVision typically Jun 20–21)</title><link>https://cvpr.thecvf.com/Conferences/2027</link><guid isPermaLink="false">event-cvpr-2027</guid><category>Event</category><pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate><description>Jun 20, 2027 – Jun 25, 2027 · Seattle, WA · IEEE/CVF · Deadlines — Paper submission deadline (AoE): Nov 16, 2026</description></item>
+<item><title>IGARSS 2027 — IEEE International Geoscience and Remote Sensing Symposium</title><link>https://www.grss-ieee.org/event/2027-ieee-international-geoscience-and-remote-sensing-symposium/</link><guid isPermaLink="false">event-igarss-2027</guid><category>Event</category><pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate><description>Jul 11, 2027 – Jul 16, 2027 · Harpa, Reykjavík, Iceland · IEEE GRSS · Deadlines — Abstract/manuscript deadline: Jan 11, 2027</description></item>
+</channel></rss>

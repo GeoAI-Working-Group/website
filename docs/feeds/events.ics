@@ -1,0 +1,81 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Geo-AI WG//website//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Geo-AI Events
+X-WR-TIMEZONE:America/Chicago
+BEGIN:VEVENT
+DTSTAMP:20261111T173853Z
+UID:agu26@geoai-wg
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261212
+SUMMARY:AGU26 Annual Meeting
+LOCATION:Moscone Center\, San Francisco\, CA
+URL:https://www.agu.org/annual-meeting
+DESCRIPTION:AGU — https://www.agu.org/annual-meeting
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261111T173853Z
+UID:agu27@geoai-wg
+DTSTART;VALUE=DATE:20271213
+DTEND;VALUE=DATE:20271218
+SUMMARY:AGU27 Annual Meeting
+LOCATION:Washington\, DC
+URL:https://www.agu.org/meetings
+DESCRIPTION:AGU — https://www.agu.org/meetings
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261111T173853Z
+UID:ams-2027@geoai-wg
+DTSTART;VALUE=DATE:20270110
+DTEND;VALUE=DATE:20270115
+SUMMARY:107th AMS Annual Meeting (incl. 26th Conference on AI for Environme
+ ntal Science)
+LOCATION:Denver\, CO
+URL:https://ams.confex.com/ams/107ANNUAL/cfp.cgi
+DESCRIPTION:American Meteorological Society — https://ams.confex.com/ams/
+ 107ANNUAL/cfp.cgi
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261111T173853Z
+UID:cvpr-2027@geoai-wg
+DTSTART;VALUE=DATE:20270620
+DTEND;VALUE=DATE:20270626
+SUMMARY:CVPR 2027 (workshops incl. EarthVision typically Jun 20–21)
+LOCATION:Seattle\, WA
+URL:https://cvpr.thecvf.com/Conferences/2027
+DESCRIPTION:IEEE/CVF — https://cvpr.thecvf.com/Conferences/2027
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261111T173853Z
+UID:cvpr-2027-20261116-deadline@geoai-wg
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+SUMMARY:⏰ Paper submission deadline (AoE): CVPR 2027 (workshops incl. Ear
+ thVision typically Jun 20–21)
+URL:https://cvpr.thecvf.com/Conferences/2027
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261111T173853Z
+UID:igarss-2027@geoai-wg
+DTSTART;VALUE=DATE:20270711
+DTEND;VALUE=DATE:20270717
+SUMMARY:IGARSS 2027 — IEEE International Geoscience and Remote Sensing Sy
+ mposium
+LOCATION:Harpa\, Reykjavík\, Iceland
+URL:https://www.grss-ieee.org/event/2027-ieee-international-geoscience-and-
+ remote-sensing-symposium/
+DESCRIPTION:IEEE GRSS — https://www.grss-ieee.org/event/2027-ieee-interna
+ tional-geoscience-and-remote-sensing-symposium/
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261111T173853Z
+UID:igarss-2027-20270111-deadline@geoai-wg
+DTSTART;VALUE=DATE:20270111
+DTEND;VALUE=DATE:20270112
+SUMMARY:⏰ Abstract/manuscript deadline: IGARSS 2027 — IEEE Internationa
+ l Geoscience and Remote Sensing Symposium
+URL:https://www.grss-ieee.org/event/2027-ieee-international-geoscience-and-
+ remote-sensing-symposium/
+END:VEVENT
+END:VCALENDAR

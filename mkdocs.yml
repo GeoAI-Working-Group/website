@@ -1,0 +1,53 @@
+site_name: Geo-AI Working Group
+site_url: https://geoai-wg.github.io/website/
+site_description: Geospatial Artificial Intelligence Working Group — lectures, events, and the EarthRISE Applied AI & Deep Learning Book.
+repo_url: https://github.com/geoai-wg/website
+repo_name: geoai-wg/website
+edit_uri: edit/main/docs/
+theme:
+  name: material
+  custom_dir: overrides
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle: {icon: material/weather-sunny, name: Light mode}
+  features: [navigation.tabs, navigation.tabs.sticky, navigation.sections, navigation.top, navigation.footer,
+             search.suggest, search.highlight, content.action.edit, toc.follow]
+  icon: {logo: material/earth}
+nav:
+  - Home: index.md
+  - Book: book.md
+  - Lectures:
+      - Schedule: lectures/index.md
+      - Talk archive: talks/index.md
+  - Events: events/index.md
+  - Resources: resources.md
+  - About: about.md
+  - Get involved: join.md
+plugins: [search]
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc: {permalink: true}
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.snippets: {base_path: [docs/_generated], check_paths: true}
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+extra_css: [stylesheets/extra.css]
+exclude_docs: |
+  _generated/
+extra:
+  social:
+    - {icon: fontawesome/brands/youtube, link: "https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"}
+    - {icon: fontawesome/brands/github, link: "https://github.com/geoai-wg"}
+    - {icon: material/rss, link: "https://geoai-wg.github.io/website/feeds/events.xml"}
+copyright: Geo-AI Working Group · Book content CC BY 4.0 (NASA EarthRISE)

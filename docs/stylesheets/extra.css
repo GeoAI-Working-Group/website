@@ -1,0 +1,10 @@
+:root { --geo-navy:#0b1f3a; --geo-cyan:#00b8d4; --geo-orange:#ff8f00; }
+.hero { padding:3rem 2rem; margin:-1rem -0.8rem 2rem; color:#fff; border-radius:0 0 12px 12px;
+  background: linear-gradient(135deg, var(--geo-navy) 0%, #12407a 60%, var(--geo-cyan) 140%); }
+.hero h1 { color:#fff; font-weight:700; margin-bottom:.4rem; }
+.hero .md-button { color:#fff; border-color:#fff; }
+.hero .md-button--primary { background:var(--geo-orange); border-color:var(--geo-orange); }
+.book-feature { border:2px solid var(--geo-cyan); border-radius:12px; padding:1.2rem 1.5rem; margin:1.5rem 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin:1.5rem 0; }
+.card { border:1px solid var(--md-default-fg-color--lightest); border-radius:10px; padding:1rem 1.2rem; }
+.card h3 { margin-top:0; }

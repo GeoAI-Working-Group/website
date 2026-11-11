@@ -1,0 +1,14 @@
+id: igarss-2027
+title: IGARSS 2027 — IEEE International Geoscience and Remote Sensing Symposium
+start: 2027-07-11
+end: 2027-07-16
+location: Harpa, Reykjavík, Iceland
+format: in-person
+type: conference
+org: IEEE GRSS
+url: https://www.grss-ieee.org/event/2027-ieee-international-geoscience-and-remote-sensing-symposium/
+tags: [remote-sensing, ieee, grss]
+deadlines:
+  - {label: Abstract/manuscript deadline, date: 2027-01-11}
+added_by: claude
+verified_on: 2026-11-11

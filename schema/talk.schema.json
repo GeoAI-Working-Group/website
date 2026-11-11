@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Geo-AI WG talk",
+  "type": "object",
+  "required": ["id", "date", "status"],
+  "properties": {
+    "id": {"type": "string"},
+    "date": {"type": "string", "format": "date"},
+    "time": {"type": "string", "pattern": "^\\d{2}:\\d{2}$"},
+    "timezone": {"type": "string"},
+    "duration_min": {"type": "integer"},
+    "status": {"enum": ["open", "lead", "invited", "confirmed", "recorded", "cancelled"]},
+    "pillar": {"type": ["string", "null"]},
+    "title": {"type": ["string", "null"]},
+    "abstract": {"type": ["string", "null"]},
+    "takeaways": {"type": "array", "items": {"type": "string"}},
+    "speaker": {
+      "type": "object",
+      "properties": {
+        "name": {"type": ["string", "null"]}, "credentials": {"type": ["string", "null"]},
+        "role": {"type": ["string", "null"]}, "affiliation": {"type": ["string", "null"]},
+        "email": {"type": ["string", "null"]}, "website": {"type": ["string", "null"]},
+        "linkedin": {"type": ["string", "null"]}, "photo": {"type": ["string", "null"]},
+        "bio": {"type": ["string", "null"]}
+      }
+    },
+    "links": {"type": "array", "items": {"type": "object", "properties": {"label": {"type": "string"}, "url": {"type": "string"}}}},
+    "hashtags": {"type": "array", "items": {"type": "string"}},
+    "recording_consent": {"type": ["boolean", "null"]},
+    "recording_url": {"type": ["string", "null"]},
+    "invited_on": {"type": ["string", "null"]},
+    "owner": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "null"]}
+  },
+  "allOf": [{
+    "if": {"properties": {"status": {"enum": ["confirmed", "recorded"]}}},
+    "then": {"required": ["title", "speaker"], "properties": {"speaker": {"required": ["name", "affiliation"]}}}
+  }]
+}

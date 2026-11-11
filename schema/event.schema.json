@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Geo-AI event",
+  "type": "object",
+  "required": ["id", "title", "start", "url", "type"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "title": {"type": "string"},
+    "start": {"type": "string", "format": "date"},
+    "end": {"type": "string", "format": "date"},
+    "location": {"type": "string"},
+    "format": {"enum": ["in-person", "virtual", "hybrid"]},
+    "type": {"enum": ["conference", "workshop", "webinar", "summit", "deadline", "wg-lecture", "other"]},
+    "org": {"type": "string"},
+    "url": {"type": "string", "format": "uri"},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "deadlines": {"type": "array", "items": {"type": "object", "required": ["label", "date"],
+      "properties": {"label": {"type": "string"}, "date": {"type": "string", "format": "date"}}}},
+    "description": {"type": "string"},
+    "added_by": {"type": "string"},
+    "verified_on": {"type": "string", "format": "date"}
+  }
+}

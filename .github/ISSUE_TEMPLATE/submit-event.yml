@@ -1,0 +1,39 @@
+name: Submit a Geo-AI event
+description: Add a conference, workshop, webinar or deadline to the Geo-AI events feed
+title: "event: <name> <year>"
+labels: [event-submission]
+body:
+  - type: input
+    id: title
+    attributes: {label: Event name}
+    validations: {required: true}
+  - type: input
+    id: url
+    attributes: {label: Official URL}
+    validations: {required: true}
+  - type: input
+    id: start
+    attributes: {label: Start date (YYYY-MM-DD)}
+    validations: {required: true}
+  - type: input
+    id: end
+    attributes: {label: End date (YYYY-MM-DD, optional)}
+  - type: input
+    id: location
+    attributes: {label: Location (or "Online")}
+  - type: dropdown
+    id: format
+    attributes: {label: Format, options: [in-person, virtual, hybrid]}
+  - type: dropdown
+    id: type
+    attributes: {label: Type, options: [conference, workshop, webinar, summit, deadline, other]}
+  - type: input
+    id: org
+    attributes: {label: Organizer / society}
+  - type: textarea
+    id: deadlines
+    attributes:
+      label: Deadlines (optional, one per line as "YYYY-MM-DD Label")
+  - type: input
+    id: tags
+    attributes: {label: Tags (comma-separated)}
