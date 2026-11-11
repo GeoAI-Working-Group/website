@@ -2,7 +2,7 @@
 
 Conferences, workshops and deadlines relevant to geospatial AI. Subscribe: [:material-rss: RSS](../feeds/events.xml) · [:material-calendar: ICS](../feeds/events.ics) · [JSON](../feeds/events.json)
 
-[:material-plus: Submit an event](https://github.com/geoai-wg/website/issues/new?template=submit-event.yml){ .md-button .md-button--primary }
+[:material-plus: Submit an event](https://github.com/GeoAI-Working-Group/website/issues/new?template=submit-event.yml){ .md-button .md-button--primary }
 
 ## Upcoming deadlines
 

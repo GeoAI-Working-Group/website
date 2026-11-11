@@ -16,4 +16,5 @@ Public feeds (after deploy): `/feeds/events.xml` (RSS), `/feeds/events.ics`, `/f
 pip install mkdocs-material pyyaml jsonschema
 python scripts/build_feeds.py && mkdocs serve
 ```
-Setup: Settings → Pages → Source: **GitHub Actions**. v2 (later): LLM search / agentic chatbot.
+Setup: Settings → Pages → Source: **GitHub Actions**.
+Custom domain (later): add `docs/CNAME` with the domain, set `site_url` in `mkdocs.yml`, set the DNS CNAME → `geoai-working-group.github.io`, then update `group-context.md` in wg-skills so invites use it. v2 (later): LLM search / agentic chatbot.

@@ -5,7 +5,7 @@ Inputs : data/events/*.yml, data/lectures/*.yml
 Outputs: docs/feeds/{events.xml, events.ics, events.json, lectures.ics, lectures.json}
          docs/events/index.md, docs/lectures/index.md, docs/_generated/{next.md, upcoming.md}
 
-usage: python scripts/build_feeds.py [--site-url https://geoai-wg.github.io/website/] [--today 2026-11-11]
+usage: python scripts/build_feeds.py [--site-url https://geoai-working-group.github.io/website/] [--today 2026-11-11]
 """
 import argparse, json, sys, uuid
 from datetime import date, datetime, timedelta, timezone
@@ -150,7 +150,7 @@ def md_events(events, today):
          "Conferences, workshops and deadlines relevant to geospatial AI. "
          "Subscribe: [:material-rss: RSS](../feeds/events.xml) · [:material-calendar: ICS](../feeds/events.ics) · "
          "[JSON](../feeds/events.json)", "",
-         "[:material-plus: Submit an event](https://github.com/geoai-wg/website/issues/new?template=submit-event.yml){ .md-button .md-button--primary }", ""]
+         "[:material-plus: Submit an event](https://github.com/GeoAI-Working-Group/website/issues/new?template=submit-event.yml){ .md-button .md-button--primary }", ""]
     if dls:
         o += ["## Upcoming deadlines", "", "| Date | Deadline | Event |", "|---|---|---|"]
         o += [f"| {dd:%b %d, %Y} | {lab} | [{e['title']}]({e['url']}) |" for dd, lab, e in dls] + [""]
@@ -200,7 +200,7 @@ def md_next(lectures, events, today):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--site-url", default="https://geoai-wg.github.io/website/")
+    ap.add_argument("--site-url", default="https://geoai-working-group.github.io/website/")
     ap.add_argument("--today", default=None)
     a = ap.parse_args()
     today = d(a.today) if a.today else date.today()

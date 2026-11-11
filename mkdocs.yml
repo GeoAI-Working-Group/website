@@ -1,8 +1,8 @@
 site_name: Geo-AI Working Group
-site_url: https://geoai-wg.github.io/website/
+site_url: https://geoai-working-group.github.io/website/
 site_description: Geospatial Artificial Intelligence Working Group — lectures, events, and the EarthRISE Applied AI & Deep Learning Book.
-repo_url: https://github.com/geoai-wg/website
-repo_name: geoai-wg/website
+repo_url: https://github.com/GeoAI-Working-Group/website
+repo_name: GeoAI-Working-Group/website
 edit_uri: edit/main/docs/
 theme:
   name: material
@@ -48,6 +48,6 @@ exclude_docs: |
 extra:
   social:
     - {icon: fontawesome/brands/youtube, link: "https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"}
-    - {icon: fontawesome/brands/github, link: "https://github.com/geoai-wg"}
-    - {icon: material/rss, link: "https://geoai-wg.github.io/website/feeds/events.xml"}
+    - {icon: fontawesome/brands/github, link: "https://github.com/GeoAI-Working-Group"}
+    - {icon: material/rss, link: "https://geoai-working-group.github.io/website/feeds/events.xml"}
 copyright: Geo-AI Working Group · Book content CC BY 4.0 (NASA EarthRISE)
