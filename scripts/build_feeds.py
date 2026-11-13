@@ -7,7 +7,7 @@ Outputs: docs/feeds/{events.xml, events.ics, events.json, lectures.ics, lectures
 
 usage: python scripts/build_feeds.py [--site-url https://geoai-working-group.github.io/website/] [--today 2026-11-11]
 """
-import argparse, json, sys, uuid
+import argparse, json, re, sys, uuid
 from datetime import date, datetime, timedelta, timezone
 from email.utils import format_datetime
 from pathlib import Path
@@ -146,7 +146,7 @@ def md_events(events, today):
     past = [e for e in events if d(e.get("end") or e["start"]) < today]
     dls = sorted(((d(x["date"]), x["label"], e) for e in events for x in e.get("deadlines") or [] if d(x["date"]) >= today),
                  key=lambda r: r[0])
-    o = ["# Geo-AI Events", "",
+    o = ['<div class="page-banner" markdown>', "<span class=\"eyebrow\">Community feed</span>", "", "# Geo-AI Events", "", "Conferences, workshops and deadlines relevant to geospatial AI.", "</div>", "",
          "Conferences, workshops and deadlines relevant to geospatial AI. "
          "Subscribe: [:material-rss: RSS](../feeds/events.xml) · [:material-calendar: ICS](../feeds/events.ics) · "
          "[JSON](../feeds/events.json)", "",
@@ -164,10 +164,32 @@ def md_events(events, today):
     return "\n".join(o) + "\n"
 
 
+CAL_ID = "c_s3efk77tcadk37rcsnn2i1jesg@group.calendar.google.com"
+CAL_EMBED = f"https://calendar.google.com/calendar/embed?src={CAL_ID}&ctz=America/Chicago&mode=AGENDA&showTitle=0&showPrint=0&showTabs=1&showCalendars=0"
+CAL_PUBLIC = f"https://calendar.google.com/calendar/u/0/embed?src={CAL_ID}&ctz=America/Chicago"
+CAL_ADD = "https://calendar.google.com/calendar/u/0?cid=Y19zM2Vmazc3dGNhZGszN3Jjc25uMmkxamVzZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+CAL_HOWTO = f"""!!! info "Add the Geo-AI calendar to your Google Calendar"
+    1. Go to the **[Official GEO-AI Calendar]({CAL_PUBLIC})**.
+    2. Click **"+ Google Calendar"** in the very bottom-right corner to add it to your Google Calendar.
+
+    One-click: [:material-calendar-plus: Subscribe in Google Calendar]({CAL_ADD}){{ .md-button .md-button--primary }}
+    Other apps (Outlook, Apple): [:material-calendar: ICS feed](../feeds/lectures.ics){{ .md-button }}
+"""
+
+
 def md_lectures(lectures, today):
-    o = ["# Lecture Series", "",
-         "Geo-AI WG talks on Google Meet. Add to calendar: [:material-calendar: ICS](../feeds/lectures.ics) · "
-         "Past talks: [YouTube playlist](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN)", "",
+    o = ["---", "hide: [navigation, toc]", "---", "", '<div class="page-banner" markdown>', "<span class=\"eyebrow\">Pillar · Knowledge Sharing</span>", "", "# Lecture Series", "", "Biweekly community talks since 2019, with analytics across every year.", "</div>", "",
+         "Biweekly Geo-AI WG talks, **Wednesdays 10:00 AM CT** on Google Meet, recorded to the "
+         "[YouTube playlist](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN). "
+         "Browse all recordings in the [talk archive](../talks/index.md).", "",
+         CAL_HOWTO, "",
+         "## Lecture analytics", "",
+         "Every lecture since the series began, by sector, theme, AI category and skill level. "
+         "Pick a year or category, or click a bar, to filter.", "",
+         '<div data-geo-dash="lectures" data-src="../feeds/history.json"></div>', "",
+         "## Calendar", "",
+         f'<iframe class="gcal" src="{CAL_EMBED}" loading="lazy" title="Geo-AI WG Google Calendar"></iframe>', "",
+         "## 2027 schedule", "",
          "| Date (CT / ET) | Speaker | Talk |", "|---|---|---|"]
     for t in sorted(lectures, key=lambda t: t["start"]):
         if t["status"] == "cancelled":
@@ -175,14 +197,13 @@ def md_lectures(lectures, today):
         sp = t.get("speaker") or {}
         who = f"**{sp['name']}**<br>{sp.get('affiliation', '')}" if sp.get("name") else "_Open slot_"
         if t["status"] == "recorded" and t.get("recording_url"):
-            talk = f"[{t['title']}]({t['recording_url']}) :material-youtube:"
+            talk = f"[{t['title']}]({t['recording_url']}) :fontawesome-brands-youtube:"
         elif t.get("title"):
             talk = t["title"]
         else:
             talk = "[Want to speak? Propose a talk](../join.md)"
         o.append(f"| {fmt_ct_et(t['start'])} | {who} | {talk} |")
     return "\n".join(o) + "\n"
-
 
 def md_next(lectures, events, today):
     nxt = next((t for t in sorted(lectures, key=lambda t: t["start"])
@@ -217,31 +238,57 @@ def load_talks():
     return sorted(out, key=lambda v: v.get("date") or "", reverse=True)
 
 
+def _tok(s):
+    return {w for w in re.findall(r"[a-z0-9]+", (s or "").lower()) if len(w) > 2 and w not in {"the", "and", "for", "with", "from", "geo", "group", "working"}}
+
+
+def join_history(talks, history):
+    """Attach sector/theme/category/skill from the tracking sheet to each video (media URL match, else best title/speaker overlap)."""
+    for v in talks:
+        best, score = None, 0
+        for h in history:
+            if h.get("media") and v["id"] in h["media"]:
+                best, score = h, 99; break
+            vt = _tok(v["title"]); ht = _tok(h["title"]) | _tok(h["speaker"])
+            sc = len(vt & ht) / (len(vt) or 1)
+            if v.get("date") and h.get("date") and abs((d(v["date"]) - d(h["date"])).days) <= 21:
+                sc += 0.25
+            if sc > score:
+                best, score = h, sc
+        h = best if score >= 0.45 else {}
+        for k in ("sector", "theme", "category", "skill"):
+            v.setdefault(k, h.get(k) or "Unspecified")
+    return talks
+
+
 def md_talks(talks):
     pl = "https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"
-    o = ["---", "hide: [navigation]", "---", "", "# Talk archive", "",
-         f"**{len(talks)} recorded talks** from the Geo-AI Working Group. "
-         f"Full playlist on [:fontawesome-brands-youtube: YouTube]({pl}). Synced automatically from the playlist on every site build.", ""]
+    o = ["---", "hide: [navigation]", "---", "", '<div class="page-banner" markdown>', "<span class=\"eyebrow\">Recordings</span>", "", "# Talk archive", "", "Every recorded Geo-AI WG talk, filterable by sector, theme, AI category and skill.", "</div>", "",
+         f"**{len(talks)} recorded talks** from the Geo-AI Working Group. Full playlist on "
+         f"[:fontawesome-brands-youtube: YouTube]({pl}). Synced automatically from the playlist on every site build.", ""]
     if not talks:
         return "\n".join(o + [f"_Playlist sync pending — [watch on YouTube]({pl})._"]) + "\n"
+    o += ['<div data-geo-dash="talks"></div>', ""]
     year = None
     for v in talks:
         y = (v.get("date") or "Undated")[:4]
         if y != year:
             if year is not None:
                 o.append("</div>\n")
-            o += [f"## {y}", "", '<div class="talk-grid" markdown>', ""]
+            o += [f'<h2 class="talk-year" id="y{y}">{y}</h2>', "", '<div class="talk-grid">']
             year = y
         url = f"https://www.youtube.com/watch?v={v['id']}&list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"
         meta = " · ".join(x for x in (v.get("speaker"), v.get("date")) if x)
-        extra = f' · [Slides]({v["slides"]})' if v.get("slides") else ""
-        o += [f'<a class="talk-card" href="{url}" target="_blank" rel="noopener">'
-              f'<img loading="lazy" src="https://i.ytimg.com/vi/{v["id"]}/mqdefault.jpg" alt="">'
-              f'<span class="talk-title">{escape(v["talk"])}</span><span class="talk-meta">{escape(meta)}</span></a>'
-              + (f"\n{extra}" if extra else ""), ""]
+        tags = " ".join(f'<span class="tag">{escape(v[k])}</span>' for k in ("theme", "sector") if v.get(k) and v[k] != "Unspecified")
+        data = " ".join(f'data-{k}="{escape(str(v.get(k) or "Unspecified"))}"' for k in ("sector", "theme", "category", "skill"))
+        o.append(f'<a class="talk-card" data-year="{y}" {data} href="{url}" target="_blank" rel="noopener">'
+                 f'<img loading="lazy" src="https://i.ytimg.com/vi/{v["id"]}/mqdefault.jpg" alt="">'
+                 f'<span class="talk-title">{escape(v["talk"])}</span><span class="talk-meta">{escape(meta)}</span>'
+                 f'<span class="talk-tags">{tags}</span></a>')
+        if v.get("slides"):
+            o.append(f'<a class="talk-slides" href="{v["slides"]}">Slides</a>')
     o.append("</div>")
     return "\n".join(o) + "\n"
-
 
 def md_stats(talks, lectures, events, today):
     up = sum(1 for e in events if d(e.get("end") or e["start"]) >= today)
@@ -276,7 +323,10 @@ def main():
     w("lectures/index.md", md_lectures(lectures, today))
     nxt, up = md_next(lectures, events, today)
     w("_generated/next.md", nxt); w("_generated/upcoming.md", up)
-    talks = load_talks()
+    hist_p = ROOT / "data/lectures/history.json"
+    history = json.loads(hist_p.read_text())["talks"] if hist_p.exists() else []
+    w("feeds/history.json", json.dumps({"talks": history}, ensure_ascii=False))
+    talks = join_history(load_talks(), history)
     (DOCS / "talks").mkdir(exist_ok=True)
     w("talks/index.md", md_talks(talks))
     w("_generated/stats.md", md_stats(talks, lectures, events, today))

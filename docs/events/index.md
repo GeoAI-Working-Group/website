@@ -1,4 +1,10 @@
+<div class="page-banner" markdown>
+<span class="eyebrow">Community feed</span>
+
 # Geo-AI Events
+
+Conferences, workshops and deadlines relevant to geospatial AI.
+</div>
 
 Conferences, workshops and deadlines relevant to geospatial AI. Subscribe: [:material-rss: RSS](../feeds/events.xml) · [:material-calendar: ICS](../feeds/events.ics) · [JSON](../feeds/events.json)
 

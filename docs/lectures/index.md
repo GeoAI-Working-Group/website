@@ -1,6 +1,36 @@
+---
+hide: [navigation, toc]
+---
+
+<div class="page-banner" markdown>
+<span class="eyebrow">Pillar · Knowledge Sharing</span>
+
 # Lecture Series
 
-Geo-AI WG talks on Google Meet. Add to calendar: [:material-calendar: ICS](../feeds/lectures.ics) · Past talks: [YouTube playlist](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN)
+Biweekly community talks since 2019, with analytics across every year.
+</div>
+
+Biweekly Geo-AI WG talks, **Wednesdays 10:00 AM CT** on Google Meet, recorded to the [YouTube playlist](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN). Browse all recordings in the [talk archive](../talks/index.md).
+
+!!! info "Add the Geo-AI calendar to your Google Calendar"
+    1. Go to the **[Official GEO-AI Calendar](https://calendar.google.com/calendar/u/0/embed?src=c_s3efk77tcadk37rcsnn2i1jesg@group.calendar.google.com&ctz=America/Chicago)**.
+    2. Click **"+ Google Calendar"** in the very bottom-right corner to add it to your Google Calendar.
+
+    One-click: [:material-calendar-plus: Subscribe in Google Calendar](https://calendar.google.com/calendar/u/0?cid=Y19zM2Vmazc3dGNhZGszN3Jjc25uMmkxamVzZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t){ .md-button .md-button--primary }
+    Other apps (Outlook, Apple): [:material-calendar: ICS feed](../feeds/lectures.ics){ .md-button }
+
+
+## Lecture analytics
+
+Every lecture since the series began, by sector, theme, AI category and skill level. Pick a year or category, or click a bar, to filter.
+
+<div data-geo-dash="lectures" data-src="../feeds/history.json"></div>
+
+## Calendar
+
+<iframe class="gcal" src="https://calendar.google.com/calendar/embed?src=c_s3efk77tcadk37rcsnn2i1jesg@group.calendar.google.com&ctz=America/Chicago&mode=AGENDA&showTitle=0&showPrint=0&showTabs=1&showCalendars=0" loading="lazy" title="Geo-AI WG Google Calendar"></iframe>
+
+## 2027 schedule
 
 | Date (CT / ET) | Speaker | Talk |
 |---|---|---|

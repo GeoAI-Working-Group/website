@@ -9,16 +9,17 @@ theme:
   custom_dir: overrides
   palette:
     - scheme: default
-      primary: indigo
-      accent: cyan
+      primary: custom
+      accent: custom
       toggle: {icon: material/weather-night, name: Dark mode}
     - scheme: slate
-      primary: indigo
-      accent: cyan
+      primary: custom
+      accent: custom
       toggle: {icon: material/weather-sunny, name: Light mode}
   features: [navigation.tabs, navigation.tabs.sticky, navigation.sections, navigation.top, navigation.footer,
              search.suggest, search.highlight, content.action.edit, toc.follow]
-  icon: {logo: material/earth}
+  favicon: assets/img/favicon.png
+  logo: assets/img/favicon.png
 nav:
   - Home: index.md
   - Book: book.md
@@ -26,6 +27,7 @@ nav:
       - Schedule: lectures/index.md
       - Talk archive: talks/index.md
   - Events: events/index.md
+  - Capacity Building: capacity-building.md
   - Resources: resources.md
   - About: about.md
   - Get involved: join.md
@@ -38,11 +40,15 @@ markdown_extensions:
   - toc: {permalink: true}
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.tabbed: {alternate_style: true}
   - pymdownx.snippets: {base_path: [docs/_generated], check_paths: true}
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 extra_css: [stylesheets/extra.css]
+extra_javascript:
+  - javascripts/vendor/chart.umd.min.js
+  - javascripts/geo-dash.js
 exclude_docs: |
   _generated/
 extra:
