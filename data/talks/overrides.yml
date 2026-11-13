@@ -1,0 +1,6 @@
+# Per-video extras keyed by YouTube video id (merged over playlist.yml on build).
+# <video_id>:
+#   speaker: "Name, Affiliation"     # override parsed speaker
+#   talk: "Clean talk title"          # override parsed title
+#   slides: talks/2026-10-14-phenoworks/slides.pdf   # rehosted file under docs/
+#   hide: true                        # drop from archive

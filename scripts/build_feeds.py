@@ -198,6 +198,62 @@ def md_next(lectures, events, today):
     return s, u + "\n\n[All events →](events/index.md)\n"
 
 
+def load_talks():
+    pl = ROOT / "data/talks/playlist.yml"
+    ov = ROOT / "data/talks/overrides.yml"
+    vids = (yaml.safe_load(pl.read_text()) or {}).get("videos", []) if pl.exists() else []
+    over = (yaml.safe_load(ov.read_text()) or {}) if ov.exists() else {}
+    out = []
+    for v in vids:
+        v = {**v, **(over.get(v["id"]) or {})}
+        if v.get("hide"):
+            continue
+        title = v["title"]
+        if "speaker" not in v and " | " in title:
+            t, sp = title.rsplit(" | ", 1)
+            v["talk"], v["speaker"] = t.strip(), sp.strip()
+        v.setdefault("talk", title)
+        out.append(v)
+    return sorted(out, key=lambda v: v.get("date") or "", reverse=True)
+
+
+def md_talks(talks):
+    pl = "https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"
+    o = ["---", "hide: [navigation]", "---", "", "# Talk archive", "",
+         f"**{len(talks)} recorded talks** from the Geo-AI Working Group. "
+         f"Full playlist on [:fontawesome-brands-youtube: YouTube]({pl}). Synced automatically from the playlist on every site build.", ""]
+    if not talks:
+        return "\n".join(o + [f"_Playlist sync pending — [watch on YouTube]({pl})._"]) + "\n"
+    year = None
+    for v in talks:
+        y = (v.get("date") or "Undated")[:4]
+        if y != year:
+            if year is not None:
+                o.append("</div>\n")
+            o += [f"## {y}", "", '<div class="talk-grid" markdown>', ""]
+            year = y
+        url = f"https://www.youtube.com/watch?v={v['id']}&list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"
+        meta = " · ".join(x for x in (v.get("speaker"), v.get("date")) if x)
+        extra = f' · [Slides]({v["slides"]})' if v.get("slides") else ""
+        o += [f'<a class="talk-card" href="{url}" target="_blank" rel="noopener">'
+              f'<img loading="lazy" src="https://i.ytimg.com/vi/{v["id"]}/mqdefault.jpg" alt="">'
+              f'<span class="talk-title">{escape(v["talk"])}</span><span class="talk-meta">{escape(meta)}</span></a>'
+              + (f"\n{extra}" if extra else ""), ""]
+    o.append("</div>")
+    return "\n".join(o) + "\n"
+
+
+def md_stats(talks, lectures, events, today):
+    up = sum(1 for e in events if d(e.get("end") or e["start"]) >= today)
+    n = len(talks) or 68
+    return (f'<div class="stats" markdown>\n'
+            f'<div><span class="num">{n}</span><span class="lbl">recorded talks</span></div>\n'
+            f'<div><span class="num">12</span><span class="lbl">book chapters (planned)</span></div>\n'
+            f'<div><span class="num">{up}</span><span class="lbl">upcoming events tracked</span></div>\n'
+            f'<div><span class="num">2019</span><span class="lbl">running since</span></div>\n'
+            f'</div>\n')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--site-url", default="https://geoai-working-group.github.io/website/")
@@ -220,6 +276,15 @@ def main():
     w("lectures/index.md", md_lectures(lectures, today))
     nxt, up = md_next(lectures, events, today)
     w("_generated/next.md", nxt); w("_generated/upcoming.md", up)
+    talks = load_talks()
+    (DOCS / "talks").mkdir(exist_ok=True)
+    w("talks/index.md", md_talks(talks))
+    w("_generated/stats.md", md_stats(talks, lectures, events, today))
+    w("_generated/latest-talks.md", "\n".join(
+        f'<a class="talk-card" href="https://www.youtube.com/watch?v={v["id"]}" target="_blank" rel="noopener">'
+        f'<img loading="lazy" src="https://i.ytimg.com/vi/{v["id"]}/mqdefault.jpg" alt="">'
+        f'<span class="talk-title">{escape(v["talk"])}</span><span class="talk-meta">{escape(v.get("speaker") or v.get("date") or "")}</span></a>'
+        for v in talks[:3]) + "\n")
     print(f"built feeds: {len(events)} events, {len(lectures)} lecture slots")
 
 
