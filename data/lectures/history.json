@@ -2,18 +2,6 @@
  "source": "google-sheet 1Ank_MXj6GxYWZILDXpxIzktKDz7LYmdN24V0wh7S9u4 (all year tabs)",
  "talks": [
   {
-   "date": "2024-01-10",
-   "year": 2024,
-   "title": "TFWG coordination",
-   "speaker": "N/A",
-   "theme": "N/A",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Confirmed",
-   "media": null
-  },
-  {
    "date": "2024-01-24",
    "year": 2024,
    "title": "Google Operational FF Model",
@@ -35,18 +23,6 @@
    "skill": "Unspecified",
    "category": "Unspecified",
    "status": "Confirmed",
-   "media": null
-  },
-  {
-   "date": "2024-02-21",
-   "year": 2024,
-   "title": "Discussion on DL Book",
-   "speaker": "TFWG Admin",
-   "theme": "N/A",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Canceled",
    "media": null
   },
   {
@@ -74,18 +50,6 @@
    "media": null
   },
   {
-   "date": "2024-04-03",
-   "year": 2024,
-   "title": "GEO-AI WG Admin",
-   "speaker": "N/A",
-   "theme": "Ecosystem/Landcover",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Confirmed",
-   "media": null
-  },
-  {
    "date": "2024-04-17",
    "year": 2024,
    "title": "Training Data Sampling Best Pracices for Modeling",
@@ -103,18 +67,6 @@
    "title": "The Pretrained Remote Sensing Transformer (Presto)",
    "speaker": "Gabriel Tseng (NASA-Harvest), Hannah Kerner (ASU)",
    "theme": "Agriculture",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Confirmed",
-   "media": null
-  },
-  {
-   "date": "2024-05-15",
-   "year": 2024,
-   "title": "GEO-AI WG Admin",
-   "speaker": "N/A",
-   "theme": "Methods",
    "sector": "Unspecified",
    "skill": "Unspecified",
    "category": "Unspecified",
@@ -170,18 +122,6 @@
    "media": null
   },
   {
-   "date": "2024-07-24",
-   "year": 2024,
-   "title": "GEO-AI WG Admin",
-   "speaker": "N/A",
-   "theme": "Water",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Confirmed",
-   "media": null
-  },
-  {
    "date": "2024-08-07",
    "year": 2024,
    "title": "Towards Digital Twin: Introduction to Foundation Models for Geoscience",
@@ -191,18 +131,6 @@
    "skill": "Unspecified",
    "category": "Unspecified",
    "status": "Confirmed",
-   "media": null
-  },
-  {
-   "date": "2024-08-21",
-   "year": 2024,
-   "title": "GEO-AI WG Admin",
-   "speaker": "N/A",
-   "theme": "Methods",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "TBC",
    "media": null
   },
   {
@@ -254,18 +182,6 @@
    "media": null
   },
   {
-   "date": "2024-10-30",
-   "year": 2024,
-   "title": "DL Book Meeting",
-   "speaker": "Tim",
-   "theme": "Unspecified",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Confirmed",
-   "media": null
-  },
-  {
    "date": "2024-11-13",
    "year": 2024,
    "title": "Benchmarking EOFM",
@@ -275,30 +191,6 @@
    "skill": "Unspecified",
    "category": "Unspecified",
    "status": "Confirmed",
-   "media": null
-  },
-  {
-   "date": "2024-12-11",
-   "year": 2024,
-   "title": "No Meeting",
-   "speaker": "-",
-   "theme": "N/A",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Canceled",
-   "media": null
-  },
-  {
-   "date": "2024-12-25",
-   "year": 2024,
-   "title": "No Meeting",
-   "speaker": "-",
-   "theme": "N/A",
-   "sector": "Unspecified",
-   "skill": "Unspecified",
-   "category": "Unspecified",
-   "status": "Canceled",
    "media": null
   },
   {
