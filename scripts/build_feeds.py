@@ -224,8 +224,8 @@ def load_talks():
     vids = (yaml.safe_load(pl.read_text()) or {}).get("videos", []) if pl.exists() else []
     over = (yaml.safe_load(ov.read_text()) or {}) if ov.exists() else {}
     out = []
-    for v in vids:
-        v = {**v, **(over.get(v["id"]) or {})}
+    for pos, v in enumerate(vids):
+        v = {**v, "pos": pos, **(over.get(v["id"]) or {})}
         if v.get("hide"):
             continue
         title = v["title"]
@@ -234,51 +234,102 @@ def load_talks():
             v["talk"], v["speaker"] = t.strip(), sp.strip()
         v.setdefault("talk", title)
         out.append(v)
-    return sorted(out, key=lambda v: v.get("date") or "", reverse=True)
+    return out
+
+
+STOP = {"the", "and", "for", "with", "from", "geo", "group", "working", "using", "via", "dr", "phd", "prof", "talk", "session", "university", "approach", "model", "models", "data"}
+ADMIN = re.compile(r"\b(admin|tfwg|n/?a|hold|coordination|discussion|meeting)\b|^\s*-*\s*$|^\s*tim\s*$", re.I)
+EMAIL = re.compile(r"<?[\w.+-]+@[\w-]+(\.[\w-]+)+>?")
+
+
+def scrub(h):
+    for k in ("title", "speaker"):
+        h[k] = re.sub(r"\s+", " ", EMAIL.sub("", str(h.get(k) or ""))).strip(" ,;")
+    if h.get("media") and not re.search(r"youtu\.?be", h["media"]):
+        h["media"] = None
+    return h
 
 
 def _tok(s):
-    return {w for w in re.findall(r"[a-z0-9]+", (s or "").lower()) if len(w) > 2 and w not in {"the", "and", "for", "with", "from", "geo", "group", "working"}}
+    return {w for w in re.findall(r"[a-z0-9]+", (s or "").lower()) if len(w) > 2 and w not in STOP}
+
+
+ORGS = {"google", "research", "university", "nasa", "institute", "center", "centre", "school", "deepmind", "labs", "earth", "foundation", "college", "national", "laboratory", "inc", "company", "group"}
+
+
+def _surnames(sp):
+    """Name-like tokens from the speaker cell (orgs/titles removed)."""
+    return {w.lower() for w in re.findall(r"[A-Za-zÀ-ÿ'’-]{4,}", sp or "") if w.lower() not in ORGS | STOP}
+
+
+def is_talk(h):
+    sp, ti = h.get("speaker") or "", h.get("title") or ""
+    return bool(sp.strip()) and not ADMIN.search(sp) and not re.search(r"^\s*(hold|n/?a|no meeting)\s*$|\bmeeting\b", ti, re.I)
+
+
+def _score(v, h):
+    vt, vlow = _tok(v["title"]), v["title"].lower()
+    ht = _tok(h["title"]) | _tok(h["speaker"])
+    ov = len(vt & ht)
+    sc = ov / max(1, min(len(vt), len(ht)))
+    if _surnames(h["speaker"]) & set(re.findall(r"[a-zà-ÿ'’-]{4,}", vlow)):
+        sc += 0.6
+    if v.get("date") and h.get("date"):
+        dd = abs((d(v["date"]) - d(h["date"])).days)
+        sc += 0.3 if dd <= 21 else (-0.3 if dd > 120 else 0)
+    return sc if ov >= 1 or sc >= 0.6 else 0
 
 
 def join_history(talks, history):
-    """Attach sector/theme/category/skill from the tracking sheet to each video (media URL match, else best title/speaker overlap)."""
-    for v in talks:
-        best, score = None, 0
-        for h in history:
-            if h.get("media") and v["id"] in h["media"]:
-                best, score = h, 99; break
-            vt = _tok(v["title"]); ht = _tok(h["title"]) | _tok(h["speaker"])
-            sc = len(vt & ht) / (len(vt) or 1)
-            if v.get("date") and h.get("date") and abs((d(v["date"]) - d(h["date"])).days) <= 21:
-                sc += 0.25
-            if sc > score:
-                best, score = h, sc
-        h = best if score >= 0.45 else {}
+    """Greedy one-to-one match of playlist videos to tracking-sheet rows (surname, title tokens, date proximity)."""
+    cands = sorted(((_score(v, h), i, j) for i, v in enumerate(talks) for j, h in enumerate(history) if is_talk(h)), reverse=True)
+    used_v, used_h = set(), set()
+    for sc, i, j in cands:
+        if sc < 0.6 or i in used_v or j in used_h:
+            continue
+        used_v.add(i); used_h.add(j)
+        v, h = talks[i], history[j]
+        h["_matched"] = True
+        v["_h"] = j
         for k in ("sector", "theme", "category", "skill"):
-            v.setdefault(k, h.get(k) or "Unspecified")
-        if h:
-            h["_matched"] = True
-            v.setdefault("speaker", h.get("speaker"))
-            if not v.get("date"):
-                v["date"] = h.get("date")
-    return talks
+            v[k] = h.get(k) or "Unspecified"
+        v.setdefault("speaker", h.get("speaker"))
+        if not v.get("date"):
+            v["date"] = h.get("date")
+    for v in talks:
+        for k in ("sector", "theme", "category", "skill"):
+            v.setdefault(k, "Unspecified")
+    # order: real dates where known; otherwise interpolate from playlist position (playlist is oldest-first)
+    known = [(v["pos"], d(v["date"]).toordinal()) for v in talks if v.get("date") and v.get("pos") is not None]
+    for v in talks:
+        if v.get("date"):
+            v["_sort"] = d(v["date"]).toordinal()
+        elif known and v.get("pos") is not None:
+            lo = max((k for k in known if k[0] <= v["pos"]), default=known[0])
+            hi = min((k for k in known if k[0] >= v["pos"]), default=known[-1])
+            v["_sort"] = lo[1] if hi[0] == lo[0] else lo[1] + (hi[1] - lo[1]) * (v["pos"] - lo[0]) / (hi[0] - lo[0])
+        else:
+            v["_sort"] = 0
+    return sorted(talks, key=lambda v: v["_sort"], reverse=True)
 
 
 def build_catalog(talks, history, today):
     """One list for the Lectures table + Talks cards: every video (tagged via the sheet) + past sheet rows with no video."""
     cat = []
     for v in talks:
-        cat.append({"date": v.get("date"), "year": (v.get("date") or "")[:4] or "Undated", "title": v["talk"],
+        cat.append({"_sort": v.get("_sort", 0), "date": v.get("date"), "year": (v.get("date") or "")[:4] or "Undated", "title": v["talk"],
                     "speaker": v.get("speaker") or "", "video": v["id"],
                     **{k: v.get(k) or "Unspecified" for k in ("sector", "theme", "category", "skill")}})
     for h in history:
-        if h.get("_matched") or not h.get("date") or d(h["date"]) > today:
+        if h.get("_matched") or not h.get("date") or d(h["date"]) > today or not is_talk(h):
             continue
-        cat.append({"date": h["date"], "year": str(h["year"]), "title": h["title"], "speaker": h["speaker"],
+        cat.append({"_sort": d(h["date"]).toordinal(), "date": h["date"], "year": str(h["year"]), "title": h["title"], "speaker": h["speaker"],
                     "video": None, "link": h.get("media"),
                     **{k: h.get(k) or "Unspecified" for k in ("sector", "theme", "category", "skill")}})
-    return sorted(cat, key=lambda r: r["date"] or "0000", reverse=True)
+    cat.sort(key=lambda r: r["_sort"], reverse=True)
+    for r in cat:
+        r.pop("_sort")
+    return cat
 
 
 def md_talks(talks):
@@ -328,8 +379,8 @@ def main():
     nxt, up = md_next(lectures, events, today)
     w("_generated/next.md", nxt); w("_generated/upcoming.md", up)
     hist_p = ROOT / "data/lectures/history.json"
-    history = json.loads(hist_p.read_text())["talks"] if hist_p.exists() else []
-    w("feeds/history.json", json.dumps({"talks": history}, ensure_ascii=False))
+    history = [scrub(h) for h in json.loads(hist_p.read_text())["talks"]] if hist_p.exists() else []
+    w("feeds/history.json", json.dumps({"talks": [h for h in history if is_talk(h)]}, ensure_ascii=False))
     talks = join_history(load_talks(), history)
     w("feeds/catalog.json", json.dumps({"talks": build_catalog(talks, history, today)}, ensure_ascii=False))
     (DOCS / "talks").mkdir(exist_ok=True)

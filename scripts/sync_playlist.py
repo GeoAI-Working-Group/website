@@ -50,6 +50,28 @@ def via_ytdlp(pl, flat=True):
     return items
 
 
+def fill_dates(items, limit=120):
+    """One yt-dlp call over only the still-undated videos (cached dates are reused, so later runs are tiny)."""
+    todo = [it["id"] for it in items if not it.get("date")][:limit]
+    if not todo:
+        return
+    cmd = ["yt-dlp", "--skip-download", "--ignore-errors", "--no-warnings", "--sleep-requests", "1",
+           "--print", "%(id)s\t%(upload_date)s", *[f"https://www.youtube.com/watch?v={i}" for i in todo]]
+    try:
+        out = subprocess.run(cmd, capture_output=True, text=True, timeout=1500).stdout
+    except Exception as e:
+        print(f"warn: per-video dates: {e}", file=sys.stderr); return
+    got = {}
+    for line in out.splitlines():
+        vid, _, ud = line.partition("\t")
+        if len(ud) == 8 and ud.isdigit():
+            got[vid] = f"{ud[:4]}-{ud[4:6]}-{ud[6:]}"
+    for it in items:
+        if not it.get("date") and it["id"] in got:
+            it["date"] = got[it["id"]]
+    print(f"dated {len(got)}/{len(todo)} videos via per-video lookup")
+
+
 def add_rss_dates(pl, items):
     """Playlist RSS gives exact publish dates for the newest ~15 videos; keep any date we already have."""
     import xml.etree.ElementTree as ET
@@ -76,8 +98,15 @@ def main():
             items, src = via_api(a.playlist, key), "api"
         if not items:
             items, src = via_ytdlp(a.playlist), "yt-dlp-flat"
+        if items and OUT.exists():
+            old = {v["id"]: v for v in (yaml.safe_load(OUT.read_text()) or {}).get("videos", [])}
+            for it in items:
+                if not it.get("date") and old.get(it["id"], {}).get("date"):
+                    it["date"] = old[it["id"]]["date"]
         if items:
             add_rss_dates(a.playlist, items)
+            if src != "api":
+                fill_dates(items)
     except Exception as e:
         print(f"warn: sync failed ({e}); keeping existing {OUT.name}", file=sys.stderr)
     if not items:

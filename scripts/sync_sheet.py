@@ -25,6 +25,15 @@ def norm(s):
     return re.sub(r"\s+", " ", str(s or "").strip().lower())
 
 
+EMAIL = re.compile(r"<?[\w.+-]+@[\w-]+(\.[\w-]+)+>?")
+NONTALK = re.compile(r"^\s*(no meeting|hold|n/?a|-+|tbd|tbc)\s*$|\bmeeting\b|\badmin\b|\bcoordination\b", re.I)
+
+
+def clean(v):
+    """Public-safe text: drop emails / <addr>, collapse whitespace."""
+    return re.sub(r"\s+", " ", EMAIL.sub("", str(v or ""))).strip(" ,;")
+
+
 def cell_date(v):
     if isinstance(v, datetime): return v.date()
     if isinstance(v, date): return v
@@ -50,18 +59,21 @@ def parse(wb):
         for r in rows[hdr_i + 1:]:
             g = lambda f: r[idx[f]] if f in idx and idx[f] < len(r) else None
             d = cell_date(g("date").value if g("date") else None)
-            sp = str(g("speaker").value or "").strip() if g("speaker") else ""
+            sp = clean(g("speaker").value) if g("speaker") else ""
             th = str(g("theme").value or "").strip() if g("theme") else ""
             st = str(g("status").value or "").strip() if g("status") else ""
-            if not d or not sp or norm(th) in SKIP_THEMES or norm(st) in SKIP_STATUS or "[hold]" in norm(sp + str(g("title").value if g("title") else "")):
+            ttl = clean(g("title").value) if g("title") else ""
+            if not d or not sp or NONTALK.search(sp) or NONTALK.search(ttl or "x") or norm(th) in SKIP_THEMES or norm(st) in SKIP_STATUS or "[hold]" in norm(sp + str(g("title").value if g("title") else "")):
                 continue
             media = None
             if g("media") is not None and g("media").hyperlink:
                 media = g("media").hyperlink.target
+                if not re.search(r"youtu\.?be", media or ""):
+                    media = None  # only recording links are public; drafts/drawings/tweets stay in the sheet
             sector = str(g("sector").value or "").strip() if g("sector") else ""
             talks.append({
                 "date": d.isoformat(), "year": d.year,
-                "title": str(g("title").value or sp).strip() if g("title") else sp,
+                "title": ttl or sp,
                 "speaker": sp, "theme": th or "Unspecified",
                 "sector": sector if sector and norm(sector) != "admin" else "Unspecified",
                 "skill": SKILL_NORM.get(norm(g("skill").value if g("skill") else ""), "Unspecified"),
