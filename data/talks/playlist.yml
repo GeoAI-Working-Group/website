@@ -1,0 +1,211 @@
+playlist: PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN
+source: yt-dlp-flat
+count: 69
+videos:
+- id: 9VgcdWCFKAs
+  title: Marine Debris Detection Using Planet Data
+  date: '2022-06-22'
+- id: YxwsYmqxBKA
+  title: Using Very High-Res Satellite Imagery and Deep Learning/Machine Learning to detect African Elephants
+  date: '2022-06-26'
+- id: H-A1t2WK-gU
+  title: 'Using Machine Learning for Spatio-temporal modeling of Landslides: Case Study in Nepal'
+  date: '2022-07-06'
+- id: jwC4K3uvZ8k
+  title: Deep Learning  Approach for Monitoring Trees outside of Forests
+  date: '2022-07-09'
+- id: EiVM6b8-Xgs
+  title: Using LSTM to predict hydrologic extremes under climate change and landuse scenarios in Mekong Basin
+  date: '2022-07-14'
+- id: kGt8Jqvk9Rg
+  title: Mapping Aquatic Vegetation in Lake Tahoe, California using UNET
+  date: '2022-07-22'
+- id: DcGxCAlxUkU
+  title: Data Drive Landslide Hazard Assessment (LHASA) Model for the Mekong Region
+  date: '2022-08-25'
+- id: FH9nnrEj5UI
+  title: Long Short Term Memory (LSTM) Networks for rainfall-runoff modeling
+  date: '2022-10-20'
+- id: 1UrqyrOvbMM
+  title: 'Lessons learned: Reference data in ML workflows'
+  date: '2022-11-15'
+- id: ZjvPpNxAPlw
+  title: '“Sit and Learn”: Using Apache Beam With Google Earth Engine'
+  date: '2022-11-17'
+- id: vGbr0sGdxCQ
+  title: Surface water mapping using AI/ML Approaches of HYDRAFloods
+  date: '2023-04-10'
+- id: EnwwDf-Z-3g
+  title: An Approach for Near Real-Time Mining Alert System using Sentinel-1
+  date: '2023-04-10'
+- id: a0rJ1iMJAYQ
+  title: Satellite Monitoring of Illegal Logging with Machine Learning
+  date: '2023-04-10'
+- id: LxrFHb_0D-k
+  title: AI/ML Approaches for identifying and detecting Mangroves
+  date: '2023-04-10'
+- id: xmr6lxKBd4U
+  title: Selective Logging using Deep Learning and Earth Observation in the Peruvian Amazon
+  date: '2023-04-21'
+- id: QKRPu3R9mks
+  title: Leveraging DNN and PlanetScope Satellite Imagery to Monitor Baton Rouge's Urban Forest
+  date: null
+- id: iDwtRnHgQ4I
+  title: Landsat quality band generation with TensorFlow on GEE
+  date: null
+- id: IqtIq-0kaH0
+  title: Farm Boundary Extraction Using EO Data and Deep Learning Approaches
+  date: null
+- id: XOoiN--vICw
+  title: Using AI/ML and RS to detect and track land-use following deforestation at the Pantropical scale
+  date: null
+- id: zBPnqbYHmZk
+  title: Landslide susceptibility in Nepal using Random Forest in Google Earth Engine (GEE)
+  date: null
+- id: k5qKoLXjEB4
+  title: Object Based Image Analysis (OBIA) and TensorFlow - Contradictory or Complementary?
+  date: null
+- id: Eww8g6z6uP8
+  title: Near real-time mapping of tropical forest disturbance using SAR and Semantic Segmentation in GEE
+  date: null
+- id: AOSVdGUXlKw
+  title: Individual Tree Prediction from Above - Where are we? Where are we going?
+  date: null
+- id: 45NpHeq1X6I
+  title: Automated Segmentation of Remote Sensing Imagery with the Segment Anything Model (SAM) - Qiusheng Wu
+  date: null
+- id: 5i5jDConjwc
+  title: 'AI/ML for Environment: SERVIR South East Asia''s presentation for the Data Science Exchange 2023'
+  date: null
+- id: xgJLgBVjBgk
+  title: 'Tracking Mining Ponds with AI: SERVIR Amazonia''s Innovative Approaches - Data Science Exchange 2023'
+  date: null
+- id: t2MLLH4vcAc
+  title: 'Monitoring Small Scale Gold Mining (Galamsey) in Ghana: SERVIR West Africa: Data Science Exchange 23'
+  date: null
+- id: cFjdQCc0F2Q
+  title: Driven Data | From Pixels to Predictions - Leveraging Remote Sensing in Machine Learning Challenges
+  date: null
+- id: ddAR-9NchoI
+  title: AI increases Global Access to Reliable Flood Forecasts | Google's Flood Hub | Flood Forecasting
+  date: null
+- id: QvACA0KsNPs
+  title: Cloud-Native Geospatial Tools - Jed Sundwall & Vincent Sarago
+  date: null
+- id: vacNCxMA_Gw
+  title: High Resolution Tree Counting and Height Mapping using Transformers and Foundational Model
+  date: null
+- id: D3WJNmrK4dc
+  title: Day 1 - Intro to Machine Learning (ML) with Google Earth Engine (GEE)
+  date: null
+- id: kHU_01lB_sc
+  title: Hydrological Modeling using Google Earth Engine (GEE) and Long Short Term Memory (LSTM) ML Model
+  date: null
+- id: Fqfgg3XzJFE
+  title: Day 2 - Intro to Deep Learning (ML) with TensorFlow and Google Earth Engine (GEE)
+  date: null
+- id: -CtnpMivmTo
+  title: 'Earth Index - Envisioning the future Foundation Model powered Geospatial Tech Stack: Dr Ben Strong'
+  date: null
+- id: sr5DTY3QWSw
+  title: Best Practices for Creating a Land Cover Map Using Machine Learning - Micky Maganini
+  date: null
+- id: H2mHNaI3oNQ
+  title: 'Presto: Lightweight, Pretrained Transformers for Remote Sensing Timeseries | Gabriel Tseng | Harvest'
+  date: null
+- id: Cu3xSZXVPDo
+  title: Using Machine Learning & Deep Learning to Improve Trace Gas and Particulate Matter (PM) Estimations
+  date: null
+- id: C9xIkee6sxc
+  title: 'FlexibleNet: A New Lightweight CNN Model for Estimating Carbon Sequestration Qualitatively'
+  date: null
+- id: 1aQMWzMyaZ4
+  title: A Phenology-guided Bayesian-CNN (PB-CNN) Framework for Yield Estimation and Uncertainty Analysis
+  date: null
+- id: -URbeMfNvoY
+  title: 'Towards Digital Twin: Introduction to Foundation Models for Geoscience -- Dr Sujit Roy, NASA IMPACT'
+  date: null
+- id: xVBxfelRxbI
+  title: Deep Learning-Driven Insights into Flood Extent and River Flow in the HKH Region
+  date: null
+- id: AWQs4Lkb-5M
+  title: Using Computer Vision, Machine Learning and Artificial Intelligence with Earth Observation -Dr Modou
+  date: null
+- id: nJuQ9_agF_M
+  title: 'Clay - Open Foundation Model of Earth: Soumya Ranjan'
+  date: null
+- id: inofp9QfzqM
+  title: 'AI Hydrology In-practice: Lessons from 6 years of operational streamflow forecasting: Alden Sampson'
+  date: null
+- id: Y6t-eNgC4wY
+  title: Evaluating EOFMs for Impact - Current Trends and Future Directions | Kyle Woodward | SIG
+  date: null
+- id: XX1r-X2Wars
+  title: Desert Locust Breeding Ground Prediction in Africa using Geo-Foundational Model (Prithvi)
+  date: null
+- id: vLk7ukCyroI
+  title: 'Breaking Earth Observation Barriers: From Data Silos to Intelligent, Reliable Discovery | Element 84'
+  date: null
+- id: ihwyHArbAIw
+  title: They Come in Peace?How helpful, skilled, and/or threatening can LLM be in Remote Sensing?
+  date: null
+- id: ldZvQYPlHNQ
+  title: Geospatial AI Analyst Agent on the Next-Gen Geospatial Data Infrastructure | Nika Co | Lawrence Xiao
+  date: null
+- id: w8prttVlfcE
+  title: 'Transforming Flood Analysis: Hydro-SAR Next Generations and Journey to KTM, Nepal | Arif Albayrak'
+  date: null
+- id: 9gMimutvQZ4
+  title: Using ArcGIS Pro as an On-Ramp to Deep Learning in Earth Observation | Emil Cherrington
+  date: null
+- id: BSLDKhTGKNA
+  title: 'CREDIT: Community Research Earth Digital Intelligence Twin | Dr "DJ" Gagne | Head of MILES@ NSF NCAR'
+  date: null
+- id: pvn2icswJgE
+  title: 'Charting NEPA: Engramming the Geointelligent Future of Federal Permitting | Anastasia Bernat | PNNL'
+  date: null
+- id: 6CQxMrMA6Rk
+  title: Navigating Instrumentation Differences with EO Observation Foundational Models (EOFMs) | Ryan DeMilt
+  date: null
+- id: 8nhlQWD_BGM
+  title: Earth Virtual Expert – EVE | ESA Φ-lab & Pi School
+  date: null
+- id: AtB_6c-GcJE
+  title: 'Everything old is new again: Bringing the relational model to climate data| Alex Merose | OpenAthena'
+  date: null
+- id: 5jSCG79nv38
+  title: 'Cooperative Geospatial Attention: Creating New Spaces for the Neighborhood Problem | Erin Trochim'
+  date: null
+- id: tq-VbpN7o2o
+  title: GeoAI in ArcGIS | Lisa Tanh | Vinay Viswambharan | ESRI
+  date: null
+- id: n3oxl99kca8
+  title: Open-Source GeoAI in Action | Qiusheng Wu
+  date: null
+- id: zkrxHY-aTpg
+  title: 'NAIP-CHM: An Open-Source Canopy Height Model for the CONUS for Decision Support | Dr. Scott Morford'
+  date: null
+- id: 9TIBqz_IUE8
+  title: Fine-tuning Foundation Models for Downscaling and Prediction + LLM Applications| Dr. Hugo Kyo Lee
+  date: null
+- id: R9pwD1bANZk
+  title: Geospatial-VLM | Towards Unified Vision-Language Intelligence for Earth Observations | DLR | ESRI
+  date: null
+- id: 0tnkq7jX4yk
+  title: 'Dr. Kelsey Doerksen | ASU: Quantifying Robustness of Geospatial Foundation Models with EarthShift'
+  date: null
+- id: M9992gSs2wU
+  title: Towards Physically Interpretable & Agentic GeoAI World Models | Mashrekur Rahman | Dartmouth
+  date: null
+- id: 3437gkoyF0c
+  title: 'WeatherNext 2: Next-Gen AI Weather Forecasting with Functional Generative Networks | Samier Merchant'
+  date: null
+- id: -dAbSdeFoFU
+  title: 'THOR: Foundation Model for Earth Observation, Climate, and Society Applications | Arnt-Børre Salberg'
+  date: null
+- id: SidAS3cn7zo
+  title: Geospatial AI for Agricultural Field Boundaries | Sayantan “Monty” Majumdar
+  date: null
+- id: ABSc3L7upaE
+  title: 'PhenoWorks: Agentic AI for Reproducible Multisensor Agricultural Research | Henry Ruiz'
+  date: null
