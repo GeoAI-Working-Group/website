@@ -183,10 +183,9 @@ def md_lectures(lectures, today):
          "[YouTube playlist](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN). "
          "Browse all recordings in the [talk archive](../talks/index.md).", "",
          CAL_HOWTO, "",
-         "## Lecture analytics", "",
-         "Every lecture since the series began, by sector, theme, AI category and skill level. "
-         "Pick a year or category, or click a bar, to filter.", "",
-         '<div data-geo-dash="lectures" data-src="../feeds/history.json"></div>', "",
+         "## All lectures", "",
+         "Every talk in the series. Click a tag, or a bar in the side figures, to filter.", "",
+         '<div data-geo-dash="table" data-src="../feeds/catalog.json"></div>', "",
          "## Calendar", "",
          f'<iframe class="gcal" src="{CAL_EMBED}" loading="lazy" title="Geo-AI WG Google Calendar"></iframe>', "",
          "## 2027 schedule", "",
@@ -258,36 +257,41 @@ def join_history(talks, history):
         h = best if score >= 0.45 else {}
         for k in ("sector", "theme", "category", "skill"):
             v.setdefault(k, h.get(k) or "Unspecified")
+        if h:
+            h["_matched"] = True
+            v.setdefault("speaker", h.get("speaker"))
+            if not v.get("date"):
+                v["date"] = h.get("date")
     return talks
+
+
+def build_catalog(talks, history, today):
+    """One list for the Lectures table + Talks cards: every video (tagged via the sheet) + past sheet rows with no video."""
+    cat = []
+    for v in talks:
+        cat.append({"date": v.get("date"), "year": (v.get("date") or "")[:4] or "Undated", "title": v["talk"],
+                    "speaker": v.get("speaker") or "", "video": v["id"],
+                    **{k: v.get(k) or "Unspecified" for k in ("sector", "theme", "category", "skill")}})
+    for h in history:
+        if h.get("_matched") or not h.get("date") or d(h["date"]) > today:
+            continue
+        cat.append({"date": h["date"], "year": str(h["year"]), "title": h["title"], "speaker": h["speaker"],
+                    "video": None, "link": h.get("media"),
+                    **{k: h.get(k) or "Unspecified" for k in ("sector", "theme", "category", "skill")}})
+    return sorted(cat, key=lambda r: r["date"] or "0000", reverse=True)
 
 
 def md_talks(talks):
     pl = "https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"
-    o = ["---", "hide: [navigation]", "---", "", '<div class="page-banner" markdown>', "<span class=\"eyebrow\">Recordings</span>", "", "# Talk archive", "", "Every recorded Geo-AI WG talk, filterable by sector, theme, AI category and skill.", "</div>", "",
-         f"**{len(talks)} recorded talks** from the Geo-AI Working Group. Full playlist on "
-         f"[:fontawesome-brands-youtube: YouTube]({pl}). Synced automatically from the playlist on every site build.", ""]
+    o = ["---", "hide: [navigation, toc]", "---", "",
+         '<div class="page-banner" markdown>', '<span class="eyebrow">Recordings</span>', "", "# Talk archive", "",
+         "Every recorded Geo-AI WG talk. Click a tag to filter.", "</div>", "",
+         f"**{len(talks)} recorded talks** · [:fontawesome-brands-youtube: Full playlist on YouTube]({pl}) · synced from the playlist on every build.", ""]
     if not talks:
         return "\n".join(o + [f"_Playlist sync pending — [watch on YouTube]({pl})._"]) + "\n"
-    o += ['<div data-geo-dash="talks"></div>', ""]
-    year = None
-    for v in talks:
-        y = (v.get("date") or "Undated")[:4]
-        if y != year:
-            if year is not None:
-                o.append("</div>\n")
-            o += [f'<h2 class="talk-year" id="y{y}">{y}</h2>', "", '<div class="talk-grid">']
-            year = y
-        url = f"https://www.youtube.com/watch?v={v['id']}&list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN"
-        meta = " · ".join(x for x in (v.get("speaker"), v.get("date")) if x)
-        tags = " ".join(f'<span class="tag">{escape(v[k])}</span>' for k in ("theme", "sector") if v.get(k) and v[k] != "Unspecified")
-        data = " ".join(f'data-{k}="{escape(str(v.get(k) or "Unspecified"))}"' for k in ("sector", "theme", "category", "skill"))
-        o.append(f'<a class="talk-card" data-year="{y}" {data} href="{url}" target="_blank" rel="noopener">'
-                 f'<img loading="lazy" src="https://i.ytimg.com/vi/{v["id"]}/mqdefault.jpg" alt="">'
-                 f'<span class="talk-title">{escape(v["talk"])}</span><span class="talk-meta">{escape(meta)}</span>'
-                 f'<span class="talk-tags">{tags}</span></a>')
-        if v.get("slides"):
-            o.append(f'<a class="talk-slides" href="{v["slides"]}">Slides</a>')
-    o.append("</div>")
+    o += ['<div data-geo-dash="cards" data-src="../feeds/catalog.json"></div>', "", "<noscript>", ""]
+    o += [f"- [{escape(v['talk'])}](https://www.youtube.com/watch?v={v['id']}) · {escape(v.get('speaker') or '')} {v.get('date') or ''}" for v in talks]
+    o += ["", "</noscript>"]
     return "\n".join(o) + "\n"
 
 def md_stats(talks, lectures, events, today):
@@ -327,6 +331,7 @@ def main():
     history = json.loads(hist_p.read_text())["talks"] if hist_p.exists() else []
     w("feeds/history.json", json.dumps({"talks": history}, ensure_ascii=False))
     talks = join_history(load_talks(), history)
+    w("feeds/catalog.json", json.dumps({"talks": build_catalog(talks, history, today)}, ensure_ascii=False))
     (DOCS / "talks").mkdir(exist_ok=True)
     w("talks/index.md", md_talks(talks))
     w("_generated/stats.md", md_stats(talks, lectures, events, today))

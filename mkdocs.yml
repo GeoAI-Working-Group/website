@@ -47,7 +47,6 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 extra_css: [stylesheets/extra.css]
 extra_javascript:
-  - javascripts/vendor/chart.umd.min.js
   - javascripts/geo-dash.js
 exclude_docs: |
   _generated/

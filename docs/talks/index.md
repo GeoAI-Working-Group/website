@@ -1,5 +1,5 @@
 ---
-hide: [navigation]
+hide: [navigation, toc]
 ---
 
 <div class="page-banner" markdown>
@@ -7,9 +7,9 @@ hide: [navigation]
 
 # Talk archive
 
-Every recorded Geo-AI WG talk, filterable by sector, theme, AI category and skill.
+Every recorded Geo-AI WG talk. Click a tag to filter.
 </div>
 
-**0 recorded talks** from the Geo-AI Working Group. Full playlist on [:fontawesome-brands-youtube: YouTube](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN). Synced automatically from the playlist on every site build.
+**0 recorded talks** · [:fontawesome-brands-youtube: Full playlist on YouTube](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN) · synced from the playlist on every build.
 
 _Playlist sync pending — [watch on YouTube](https://www.youtube.com/playlist?list=PLKlxghiZuIM59XVSjuye43qcHXRZLwQNN)._

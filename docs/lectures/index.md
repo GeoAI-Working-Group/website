@@ -20,11 +20,11 @@ Biweekly Geo-AI WG talks, **Wednesdays 10:00 AM CT** on Google Meet, recorded to
     Other apps (Outlook, Apple): [:material-calendar: ICS feed](../feeds/lectures.ics){ .md-button }
 
 
-## Lecture analytics
+## All lectures
 
-Every lecture since the series began, by sector, theme, AI category and skill level. Pick a year or category, or click a bar, to filter.
+Every talk in the series. Click a tag, or a bar in the side figures, to filter.
 
-<div data-geo-dash="lectures" data-src="../feeds/history.json"></div>
+<div data-geo-dash="table" data-src="../feeds/catalog.json"></div>
 
 ## Calendar
 

@@ -35,10 +35,10 @@ def via_api(pl, key):
             return items
 
 
-def via_ytdlp(pl):
-    # full metadata (not --flat-playlist) so upload_date is populated
-    cmd = ["yt-dlp", "--skip-download", "--ignore-errors", "--no-warnings", "--print",
-           "%(id)s\t%(upload_date)s\t%(title)s", f"https://www.youtube.com/playlist?list={pl}"]
+def via_ytdlp(pl, flat=True):
+    # --flat-playlist = one request for the whole list (robust on CI IPs); dates come from the sheet join / RSS
+    cmd = ["yt-dlp", "--skip-download", "--ignore-errors", "--no-warnings", *(["--flat-playlist"] if flat else []),
+           "--print", "%(id)s\t%(upload_date)s\t%(title)s", f"https://www.youtube.com/playlist?list={pl}"]
     out = subprocess.run(cmd, capture_output=True, text=True, timeout=1800).stdout
     items = []
     for line in out.splitlines():
@@ -48,6 +48,21 @@ def via_ytdlp(pl):
             items.append({"id": vid, "title": title,
                           "date": f"{ud[:4]}-{ud[4:6]}-{ud[6:]}" if ud and ud != "NA" else None})
     return items
+
+
+def add_rss_dates(pl, items):
+    """Playlist RSS gives exact publish dates for the newest ~15 videos; keep any date we already have."""
+    import xml.etree.ElementTree as ET
+    try:
+        with urllib.request.urlopen(f"https://www.youtube.com/feeds/videos.xml?playlist_id={pl}", timeout=30) as r:
+            root = ET.fromstring(r.read())
+        ns = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/schemas/2015"}
+        dates = {e.findtext("yt:videoId", namespaces=ns): e.findtext("a:published", namespaces=ns)[:10] for e in root.findall("a:entry", ns)}
+        for it in items:
+            if not it.get("date") and it["id"] in dates:
+                it["date"] = dates[it["id"]]
+    except Exception as e:
+        print(f"warn: rss dates: {e}", file=sys.stderr)
 
 
 def main():
@@ -60,12 +75,19 @@ def main():
         if key:
             items, src = via_api(a.playlist, key), "api"
         if not items:
-            items, src = via_ytdlp(a.playlist), "yt-dlp"
+            items, src = via_ytdlp(a.playlist), "yt-dlp-flat"
+        if items:
+            add_rss_dates(a.playlist, items)
     except Exception as e:
         print(f"warn: sync failed ({e}); keeping existing {OUT.name}", file=sys.stderr)
     if not items:
         print("no items fetched; existing playlist.yml kept")
         return 0
+    if OUT.exists():
+        old = {v["id"]: v for v in (yaml.safe_load(OUT.read_text()) or {}).get("videos", [])}
+        for it in items:
+            if not it.get("date") and old.get(it["id"], {}).get("date"):
+                it["date"] = old[it["id"]]["date"]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(yaml.safe_dump({"playlist": a.playlist, "source": src, "count": len(items), "videos": items},
                                   sort_keys=False, allow_unicode=True, width=200))
